@@ -5,48 +5,143 @@
 		<link rel="icon" type="image/png" sizes="16x16" href="favicon-16.png" />
 		<link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png" />
 		<link rel="icon" type="image/png" sizes="48x48" href="favicon-48.png" />
+		<link
+			rel="stylesheet"
+			href="https://fonts.googleapis.com/css?family=Nunito&amp;display=swap" />
+		<!-- Commented out until Firefox enabls rel="preload" by default.
+		<link
+			rel="preload"
+			href="https://fonts.googleapis.com/css?family=Nunito&amp;display=swap"
+			as="style" onload="this.onload=null; this.rel='stylesheet'" />
+		<noscript>
+			<link
+				rel="stylesheet"
+				href="https://fonts.googleapis.com/css?family=Nunito&amp;display=swap" />
+		</noscript>
+		-->
+		<meta charset="UTF-8" />
 		<meta
 			name="viewport"
 			content="width=device-width,
-							 initial-scale=0.86,
-							 maximum-scale=3.0,
-							 minimum-scale=0.86" />
+							 initial-scale=1.0,
+							 maximum-scale=5.0,
+							 minimum-scale=1.0" />
 		<meta
 			name="Description"
-			content="A cross-platform Game Boy Color emulator written in C, with a
-							 focus on accuracy." />
+			content="A cross-platform Game Boy and Game Boy Color emulator written in
+							 C, with a focus on accuracy." />
 		<style type="text/css">
 			body {
 				background-color: #393939;
-				color: #FFFFFFDE
+				color: #FFFFFFDE;
+				font-family: Nunito, sans-serif;
+				font-size: 16px;
+				line-height: 1.4;
+				margin: auto;
+				max-width: 50em;
+				padding: 1em;
 			}
 
-			.center {
-				display: block;
-				margin-left: auto;
-				margin-right: auto;
+			.banner {
+				display: table;
+				margin: auto;
+				width: 28em;
+				height: 10em;
+				max-width: 80vw;
+				max-height: calc(80vw * 10 / 28);
+			}
+
+			.banner > img {
+				display: inline-block;
+				width: 100%;
+				font-size: calc(80vw * 8 / 28);
+				vertical-align: middle;
+			}
+
+			@media screen and (min-width: 35em) {
+				.banner > img {
+					font-size: 8em;
+				}
+			}
+
+			header > h1 {
 				text-align: center;
-				width: 80%;
+			}
+
+			h1, h2, h3 {
+				line-height: 1.2;
+			}
+
+			a {
+				color: #00CCD2;
+			}
+
+			a:visited {
+				color: #AE46DE;
 			}
 
 			a img {
 				border: none;
+				text-align: center;
 			}
 
 			a:focus {
 				outline: #FFFFFF33 dashed medium;
 			}
+
+			li:not(:last-child) {
+				margin-bottom: 0.4em;
+			}
+
+			li.complete {
+				color: #B8FF2C;
+			}
+
+			li.partial {
+				color: #FDD827;
+			}
+
+			li.todo {
+				color: #FD73A9;
+			}
+
 		</style>
 	</head>
 
 	<body>
-		<p>
-			<a href="https://github.com/philj56/GBCC/">
-				<img src="header.svg" alt="GBCC" class="center" />
+		<header>
+			<a href="https://github.com/philj56/GBCC/" class="banner">
+				<img src="header.svg" alt="GBCC"/>
 			</a>
-		</p>
-		<h1 class="center">
-			It's an emulator, innit?
-		</h1>
+			<h1> It's an emulator, innit? </h1>
+		</header>
+
+		<main>
+			<h2> About </h2>
+			<p>
+			GBCC is a cross-platform Game Boy and Game Boy Color emulator written in
+			C, with a focus on accuracy. Available on Linux and Android.
+			</p>
+			<h2> Features </h2>
+			<h3> Core </h3>
+
+			<ul>
+				<li> Memory Bank Controllers:
+					<ul>
+						<li class="complete"> MBC1 </li>
+						<li class="complete"> MBC2 </li>
+						<li class="complete"> MBC3 </li>
+						<li class="complete"> MBC5 </li>
+						<li class="todo"> MBC6 </li>
+						<li class="complete"> MBC7 </li>
+						<li class="partial"> HuC1 (IR port not implemented) </li>
+						<li class="partial"> HuC3 (IR port not implemented) </li>
+						<li class="complete"> MMM01 </li>
+						<li class="todo"> Sachen MMC1 </li>
+						<li class="todo"> Sachen MMC2 </li>
+					</ul>
+				</li>
+			</ul>
+		</main>
 	</body>
 </html>
