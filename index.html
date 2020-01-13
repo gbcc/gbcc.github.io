@@ -7,16 +7,16 @@
 		<link rel="icon" type="image/png" sizes="48x48" href="favicon-48.png" />
 		<link
 			rel="stylesheet"
-			href="https://fonts.googleapis.com/css?family=Nunito&amp;display=swap" />
+			href="https://fonts.googleapis.com/css?family=Nunito:400,700&amp;display=swap" />
 		<!-- Commented out until Firefox enabls rel="preload" by default.
 		<link
 			rel="preload"
-			href="https://fonts.googleapis.com/css?family=Nunito&amp;display=swap"
+			href="https://fonts.googleapis.com/css?family=Nunito:400,700&amp;display=swap"
 			as="style" onload="this.onload=null; this.rel='stylesheet'" />
 		<noscript>
 			<link
 				rel="stylesheet"
-				href="https://fonts.googleapis.com/css?family=Nunito&amp;display=swap" />
+				href="https://fonts.googleapis.com/css?family=Nunito:400,700&amp;display=swap" />
 		</noscript>
 		-->
 		<meta charset="UTF-8" />
@@ -80,7 +80,7 @@
 				color: #AE46DE;
 			}
 
-			a img {
+			a > img {
 				border: none;
 				text-align: center;
 			}
@@ -93,16 +93,55 @@
 				margin-bottom: 0.4em;
 			}
 
-			li.complete {
+			.done {
 				color: #B8FF2C;
 			}
 
-			li.partial {
+			.part {
 				color: #FDD827;
 			}
 
-			li.todo {
+			.todo {
 				color: #FD73A9;
+			}
+
+			.sr-only {
+				clip: rect(1px, 1px, 1px, 1px);
+				clip-path: inset(50%);
+				overflow: hidden;
+				position: absolute;
+			}
+
+			.screenshot-grid {
+				margin: auto;
+			}
+
+			.screenshot-grid td {
+				padding: 10px;
+			}
+
+			.screenshot {
+				display: block;
+				image-rendering: crisp-edges;
+				image-rendering: pixelated;
+				width: 320px;
+				height: 288px;
+			}
+
+			.android-screenshot {
+				display: block;
+				width: 240px;
+				height: 427px;
+				margin: auto;
+			}
+
+			/* This should really be 3em + 640px, but chrome doesn't support calc()
+				 in media queries. */
+			@media screen and (max-width: 700px) {
+				.screenshot {
+					width: 160px;
+					height: 144px;
+				}
 			}
 
 		</style>
@@ -119,29 +158,127 @@
 		<main>
 			<h2> About </h2>
 			<p>
-			GBCC is a cross-platform Game Boy and Game Boy Color emulator written in
-			C, with a focus on accuracy. Available on Linux and Android.
+			<a href="https://github.com/philj56/GBCC/">GBCC</a> is a cross-platform
+			Game Boy and Game Boy Color emulator written in C, with a focus on
+			accuracy. Available on Linux and Android.
 			</p>
 			<h2> Features </h2>
-			<h3> Core </h3>
-
+			<h3> Emulator </h3>
 			<ul>
+				<li> SDL &amp; GTK GUIs </li>
+				<li> Shaders: Dot-Matrix, Colour-Correct and Subpixel
+					<ul>
+						<li> Colour-Correct and Subpixel shaders provide accurate GBC
+							colour reproduction
+						</li>
+					</ul>
+				</li>
+				<li> Screenshots, both with &amp; without shaders applied </li>
+				<li> Gamepad support </li>
+				<li> Cartridge saves, including real-time clock data
+					<ul> <li> Auto-save after game writes to SRAM </li> </ul>
+				</li>
+				<li> Save states
+					<ul> <li> Auto-save on close &amp; resume on open </li> </ul>
+				</li>
+				<li> Adjustable turbo mode </li>
+				<li> Palettes for DMG games </li>
+				<li> Frame blending </li>
+				<li> VRAM tile data display </li>
+			</ul>
+			<h3> Hardware </h3>
+			<p>
+				Legend:
+					<span class="done">Supported<span class="sr-only"> ✓</span></span>,
+					<span class="part">Partially Supported<span class="sr-only"> ✓</span></span>,
+					<span class="todo">Not Supported<span class="sr-only"> ❌</span></span>
+			</p>
+			<ul>
+				<li> Game Boy Revisions:
+					<ul>
+						<li class="done"> Game Boy <span class="sr-only">✓</span> </li>
+						<li class="done"> Game Boy Color <span class="sr-only">✓</span> </li>
+						<li class="todo"> Game Boy Pocket <span class="sr-only">❌</span> </li>
+						<li class="todo"> Super Game Boy <span class="sr-only">❌</span> </li>
+					</ul>
+				</li>
 				<li> Memory Bank Controllers:
 					<ul>
-						<li class="complete"> MBC1 </li>
-						<li class="complete"> MBC2 </li>
-						<li class="complete"> MBC3 </li>
-						<li class="complete"> MBC5 </li>
-						<li class="todo"> MBC6 </li>
-						<li class="complete"> MBC7 </li>
-						<li class="partial"> HuC1 (IR port not implemented) </li>
-						<li class="partial"> HuC3 (IR port not implemented) </li>
-						<li class="complete"> MMM01 </li>
-						<li class="todo"> Sachen MMC1 </li>
-						<li class="todo"> Sachen MMC2 </li>
+						<li class="done"> MBC1 <span class="sr-only">✓</span> </li>
+						<li class="done"> MBC2 <span class="sr-only">✓</span> </li>
+						<li class="done"> MBC3 <span class="sr-only">✓</span> </li>
+						<li class="done"> MBC5 <span class="sr-only">✓</span> </li>
+						<li class="todo"> MBC6 <span class="sr-only">❌</span> </li>
+						<li class="done"> MBC7 <span class="sr-only">✓</span> </li>
+						<li class="part"> HuC1 <span class="sr-only">✓</span>
+							(IR port not implemented) </li>
+						<li class="part"> HuC3 <span class="sr-only">✓</span>
+							(IR port not implemented) </li>
+						<li class="done"> MMM01 <span class="sr-only">✓</span> </li>
+						<li class="todo"> Sachen MMC1 <span class="sr-only">❌</span> </li>
+						<li class="todo"> Sachen MMC2 <span class="sr-only">❌</span> </li>
+					</ul>
+				</li>
+				<li> Peripherals &amp; I/O:
+					<ul>
+						<li class="part"> Link Cable <span class="sr-only">✓</span>
+							(Only supports a fake "link" with itself) </li>
+						<li class="todo"> IR Port <span class="sr-only">❌</span> </li>
+						<li class="done"> Rumble Pak <span class="sr-only">✓</span> </li>
+						<li class="done"> Accelerometer <span class="sr-only">✓</span> </li>
+						<li class="part"> Game Boy Printer <span class="sr-only">✓</span>
+							(Only to terminal) </li>
+						<li class="todo"> Game Boy Camera <span class="sr-only">❌</span> </li>
+						<li class="todo"> Pocket Sonar <span class="sr-only">❌</span> </li>
+						<li class="todo"> Mobile Adapter GB <span class="sr-only">❌</span> </li>
+						<li class="todo"> Barcode Boy <span class="sr-only">❌</span> </li>
 					</ul>
 				</li>
 			</ul>
+			<h2> Screenshots </h2>
+			<p>
+			Click an image to see the 1080p Subpixel (for GBC) or Dot-Matrix (for
+			DMG) shaded version
+			</p>
+			<table class="screenshot-grid">
+				<tr>
+					<td>
+						<a href="screenshots/shantae.png" class="screenshot">
+							<img src="screenshots/shantae-thumb.png" alt="Shantae" class="screenshot" /></a>
+					</td>
+					<td>
+						<a href="screenshots/pinball.png" class="screenshot">
+							<img src="screenshots/pinball-thumb.png" alt="Pinball" class="screenshot" /></a>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<a href="screenshots/prehistorik.png" class="screenshot">
+							<img src="screenshots/prehistorik-thumb.png" alt="Prehistorik" class="screenshot" /></a>
+					</td>
+					<td>
+						<a href="screenshots/darkwing.png" class="screenshot">
+							<img src="screenshots/darkwing-thumb.png" alt="Darkwing" class="screenshot" /></a>
+					</td>
+				</tr>
+			</table>
+				<a href="screenshots/kirby-android.png" class="android-screenshot">
+					<img src="screenshots/kirby-android-thumb.png" alt="Kirby" class="android-screenshot" /></a>
+			<h2> Resources </h2>
+			<dl>
+				<dt> <a href="https://www.pastraiser.com/cpu/gameboy/gameboy_opcodes.html">Gameboy Opcodes</a> </dt>
+				<dd> Handy overview of opcode timings &amp; sizes </dd>
+				<dt> <a href="http://bgb.bircd.org/pandocs.htm">The Pandocs</a> </dt>
+				<dd> <em> The </em> introduction to Game Boy hardware </dd>
+				<dt> <a href="https://github.com/Gekkio/mooneye-gb">Mooneye GB</a> </dt>
+				<dd> Well documented set of test ROMs </dd>
+				<dt> <a href="https://gbdev.gg8.se/wiki/articles/Main_Page">GBDev Wiki</a> </dt>
+				<dd> Detailed articles on every aspect of core Game Boy hardware </dd>
+				<dt> <a href="https://wiki.tauwasser.eu/view/Main_Page">Tauwasser's Wiki</a> </dt>
+				<dd> Great documentation of the MMM01 &amp; Sachen mappers </dd>
+				<dt> <a href="https://gbdev.github.io/list.html">Awesome GBDev</a> </dt>
+				<dd> Links to everything else you could ever want to know </dd>
+			</dl>
 		</main>
 	</body>
 </html>
