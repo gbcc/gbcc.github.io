@@ -152,12 +152,18 @@
 			}
 
 		</style>
+
+		<script>
+			if ('serviceWorker' in navigator) {
+				navigator.serviceWorker.register('service-worker.js');
+			}
+		</script>
 	</head>
 
 	<body>
 		<header>
 			<a href="https://github.com/philj56/GBCC/" class="banner">
-				<img src="/header.svg" alt="GBCC"/>
+				<img src="header.svg" alt="GBCC"/>
 			</a>
 			<h1> It's an emulator, innit? </h1>
 		</header>
@@ -251,26 +257,26 @@
 				<tr>
 					<td>
 						<a href="screenshots/shantae.png" class="screenshot">
-							<img src="/screenshots/shantae-thumb.png" alt="Shantae" class="screenshot" /></a>
+							<img src="screenshots/shantae-thumb.png" alt="Shantae" class="screenshot" /></a>
 					</td>
 					<td>
 						<a href="screenshots/pinball.png" class="screenshot">
-							<img src="/screenshots/pinball-thumb.png" alt="Pokémon Pinball" class="screenshot" /></a>
+							<img src="screenshots/pinball-thumb.png" alt="Pokémon Pinball" class="screenshot" /></a>
 					</td>
 				</tr>
 				<tr>
 					<td>
 						<a href="screenshots/prehistorik.png" class="screenshot">
-							<img src="/screenshots/prehistorik-thumb.png" alt="Prehistorik Man" class="screenshot" /></a>
+							<img src="screenshots/prehistorik-thumb.png" alt="Prehistorik Man" class="screenshot" /></a>
 					</td>
 					<td>
 						<a href="screenshots/darkwing.png" class="screenshot">
-							<img src="/screenshots/darkwing-thumb.png" alt="Darkwing Duck" class="screenshot" /></a>
+							<img src="screenshots/darkwing-thumb.png" alt="Darkwing Duck" class="screenshot" /></a>
 					</td>
 				</tr>
 			</table>
 			<a href="screenshots/kirby-android.png" class="android-screenshot">
-				<img src="/screenshots/kirby-android-thumb.png" alt="Kirby Tilt 'n' Tumble" class="android-screenshot" /></a>
+				<img src="screenshots/kirby-android-thumb.png" alt="Kirby Tilt 'n' Tumble" class="android-screenshot" /></a>
 			<h2> Resources </h2>
 			<dl>
 				<dt> <a href="https://www.pastraiser.com/cpu/gameboy/gameboy_opcodes.html">Gameboy Opcodes</a> </dt>
