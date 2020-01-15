@@ -34,7 +34,7 @@ self.addEventListener('install', function(evt) {
 // On fetch, try network, or fall back to cache
 self.addEventListener('fetch', function(evt) {
 	// Try network and if it fails, go for the cached copy.
-	evt.respondWith(fromNetwork(evt.request, 1000).catch(function () {
+	evt.respondWith(fromNetwork(evt.request, 2000).catch(function () {
 		evt.respondWith(fromCache(evt.request));
 	}));
 });
@@ -44,6 +44,7 @@ self.addEventListener('fetch', function(evt) {
 function precache() {
 	return caches.open(CACHE).then(function (cache) {
 		return cache.addAll([
+			'.',
 			'index.html',
 			'header.svg',
 			'site.webmanifest',
