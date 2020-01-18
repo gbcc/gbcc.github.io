@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-GB" xml:lang="en-GB">
+	<head>
+		<title>GBCC - Manpage</title>
+
+		<meta charset="UTF-8" />
+		<meta
+			name="Description"
+			content="GBCC Manpage" />
+		<meta
+			name="viewport"
+			content="width=device-width,
+							 initial-scale=1.0,
+							 maximum-scale=5.0,
+							 minimum-scale=1.0" />
+
+		<link rel="apple-touch-icon" sizes="180x180" href="icons/apple-touch-icon.png" />
+		<link rel="icon" type="image/png" sizes="16x16" href="icons/favicon-16x16.png" />
+		<link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32x32.png" />
+		<link rel="manifest" href="site.webmanifest" />
+		<link rel="mask-icon" href="icons/safari-pinned-tab.svg" color="#009688" />
+		<meta name="msapplication-TileColor" content="#009688" />
+		<meta name="theme-color" content="#009688" />
+
+		<link
+			rel="stylesheet"
+			href="https://fonts.googleapis.com/css?family=Nunito:400,700&amp;display=swap" />
+		<!-- Commented out until Firefox enables rel="preload" by default.
+		<link
+			rel="preload"
+			href="https://fonts.googleapis.com/css?family=Nunito:400,700&amp;display=swap"
+			as="style" onload="this.onload=null; this.rel='stylesheet'" />
+		<noscript>
+			<link
+				rel="stylesheet"
+				href="https://fonts.googleapis.com/css?family=Nunito:400,700&amp;display=swap" />
+		</noscript>
+		-->
+		<style>
+			body {
+				background-color: #393939;
+				color: #FFFFFFDE;
+				font-family: Nunito, sans-serif;
+				font-size: 16px;
+				line-height: 1.4;
+				margin: auto;
+				max-width: 50em;
+				padding: 1em;
+			}
+
+			h1, h2, h3 {
+				line-height: 1.2;
+			}
+
+			a:focus {
+				outline: #FFFFFF33 dashed medium;
+			}
+
+		</style>
+	</head>
+
+	<body>
+		<main>
+			<h1>NAME</h1>
+<p>gbcc - Game Boy Color emulator written in C</p>
+<h1>SYNOPSIS</h1>
+<p><strong>gbcc</strong> [-aAbfFhivV] [-c <em>config_file</em>] [-p <em>palette</em>] [-s <em>shader</em>] [-t <em>speed</em>] rom</p>
+<h1>DESCRIPTION</h1>
+<p>gbcc is a Game Boy Color emulator, created mostly as an exercise in emulator development and writing a large project in C. Development is ongoing (though slow).</p>
+<h1>OPTIONS</h1>
+<p><strong>-a, --autoresume</strong></p>
+<blockquote>
+<p>Automatically resume from when gbcc was last closed for this game.</p>
+</blockquote>
+<p><strong>-A, --autosave</strong></p>
+<blockquote>
+<p>Automatically save SRAM after the last write was detected. Default is to save on normal program exit.</p>
+</blockquote>
+<p><strong>-b, --background</strong></p>
+<blockquote>
+<p>Enable playback while unfocused.</p>
+</blockquote>
+<p><strong>-c, --config</strong></p>
+<blockquote>
+<p>Specify path to custom config file.</p>
+</blockquote>
+<p><strong>-f, --fractional</strong></p>
+<blockquote>
+<p>Enable fractional scaling (default is integer).</p>
+</blockquote>
+<p><strong>-F, --frame-blending</strong></p>
+<blockquote>
+<p>Enable frame blending.</p>
+</blockquote>
+<p><strong>-h, --help</strong></p>
+<blockquote>
+<p>Show help message and exit.</p>
+</blockquote>
+<p><strong>-i, --interlace</strong></p>
+<blockquote>
+<p>Enable interlaced mode (experimental).</p>
+</blockquote>
+<p><strong>-p, --palette</strong>=<em>palette</em></p>
+<blockquote>
+<p>Select the color palette for use in DMG mode.</p>
+</blockquote>
+<p><strong>-s, --shader</strong></p>
+<blockquote>
+<p>Select the shader to use on startup.</p>
+</blockquote>
+<p><strong>-t, --turbo</strong>=<em>speed</em></p>
+<blockquote>
+<p>Set a fractional speed limit for turbo mode. Defaults to 0 (unlimited).</p>
+</blockquote>
+<p><strong>-v, --vsync</strong></p>
+<blockquote>
+<p>Enable VSync.</p>
+</blockquote>
+<p><strong>-V, --vram-window</strong></p>
+<blockquote>
+<p>Display a window containing VRAM tile data.</p>
+</blockquote>
+<h1>KEYS</h1>
+<p>The following are the keybindings as for a standard QWERTY keyboard, and will vary for others.</p>
+<p>z</p>
+<blockquote>
+<p>A button</p>
+</blockquote>
+<p>x</p>
+<blockquote>
+<p>B button</p>
+</blockquote>
+<p>&lt;Return&gt;</p>
+<blockquote>
+<p>Start</p>
+</blockquote>
+<p>&lt;Space&gt;</p>
+<blockquote>
+<p>Select</p>
+</blockquote>
+<p>&lt;Arrow keys&gt;</p>
+<blockquote>
+<p>D-Pad</p>
+</blockquote>
+<p>&lt;Right Shift&gt;</p>
+<blockquote>
+<p>Turbo mode (toggle)</p>
+</blockquote>
+<p>&lt;Escape&gt;</p>
+<blockquote>
+<p>Toggle settings menu</p>
+</blockquote>
+<p>s</p>
+<blockquote>
+<p>Filtered &amp; scaled screenshot</p>
+</blockquote>
+<p>S</p>
+<blockquote>
+<p>Raw screenshot</p>
+</blockquote>
+<p>p</p>
+<blockquote>
+<p>Pause emulation</p>
+</blockquote>
+<p>P</p>
+<blockquote>
+<p>Connect the Gameboy Printer, printing to stdout.</p>
+</blockquote>
+<p>f</p>
+<blockquote>
+<p>Toggle FPS counter</p>
+</blockquote>
+<p>l</p>
+<blockquote>
+<p>Connect the link cable port to itself. This makes the GameBoy act as if it is talking to an exact copy of itself, and enables e.g. trading (and battling!) with oneself in Pokémon.</p>
+</blockquote>
+<p>A</p>
+<blockquote>
+<p>Toggle autosave</p>
+</blockquote>
+<p>b</p>
+<blockquote>
+<p>Toggle background playback</p>
+</blockquote>
+<p>v</p>
+<blockquote>
+<p>Cycle through available shaders</p>
+</blockquote>
+<p>V</p>
+<blockquote>
+<p>Toggle VRAM window display</p>
+</blockquote>
+<p>1</p>
+<blockquote>
+<p>Toggle background display</p>
+</blockquote>
+<p>2</p>
+<blockquote>
+<p>Toggle window display</p>
+</blockquote>
+<p>3</p>
+<blockquote>
+<p>Toggle sprites display</p>
+</blockquote>
+<p>&lt;F1-9&gt;</p>
+<blockquote>
+<p>Load savestate 1-9</p>
+</blockquote>
+<p>&lt;Left Shift + F1-9&gt;</p>
+<blockquote>
+<p>Save savestate 1-9</p>
+</blockquote>
+<p>&lt;Numpad 2,4,6,8&gt;</p>
+<blockquote>
+<p>Accelerometer control (MBC7 games only)</p>
+</blockquote>
+<p>&lt;Left Shift + Numpad 2,4,6,8&gt;</p>
+<blockquote>
+<p>Strong accelerometer control (MBC7 games only)</p>
+</blockquote>
+<h1>FILES</h1>
+<p>Note: these are the defaults as defined at compile time.</p>
+<p><em>/usr/share/gbcc/tileset.png</em></p>
+<blockquote>
+<p>Tileset used for the on-screen display.</p>
+</blockquote>
+<p><em>/usr/share/gbcc/print.wav</em></p>
+<blockquote>
+<p>Sound played while printing.</p>
+</blockquote>
+<p><em>/usr/share/gbcc/shaders/</em></p>
+<blockquote>
+<p>Folder containing all GLSL shaders used for rendering.</p>
+</blockquote>
+<p><em>$XDG_CONFIG_HOME/gbcc/config</em></p>
+<blockquote>
+<p>Config file. Available options are the same as command line options (where possible), defined with syntax:</p>
+<blockquote>
+<p>option = value</p>
+</blockquote>
+<p>For command line equivalents which take no arguments, value is taken to be a boolean (i.e. value = 0 disables the option, any other number enables it).</p>
+</blockquote>
+<blockquote>
+<p>Lines starting with '#' are ignored.</p>
+<p>Command line options override config file options.</p>
+</blockquote>
+<h1>SAVE FILES</h1>
+<p>Saves are created with the same name as the rom, ending in .sav. The save file format is a plain dump of SRAM. For MBC3 cartridges, RTC data is appended to this ram dump in plain text.</p>
+<h1>SAVE STATES</h1>
+<p>Save states are created with the same name as the rom, ending in .s[0-9]. Extensions s1-s9 are the save states associated with the corresponding function keys, while s0 is a backup created every time gbcc is closed. The save state format is a pure binary dump of the main gbcc struct, so will almost certainly not work if moved between different architectures / compilers etc.</p>
+<h1>BUGS</h1>
+<p>Surprisingly few.</p>
+<h1>AUTHORS</h1>
+<p>Philip Jones &lt;philj56@gmail.com&gt;</p>
+		</main>
+
+
+		<hr style="border: 1px solid #FFFFFF33" />
+		<footer style="color: #FFFFFF90; display: flex; justify-content: space-between;">
+			<span>© 2017-2019 Phil Jones</span>
+			<a href="https://github.com/philj56/" style="display: inline-flex; align-items: center;">
+				<span style="padding-right: 5px; height: 20px;">
+					<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 16 16" version="1.1">
+						<path
+							fill="#FFFFFF90"
+							fill-rule="evenodd"
+							d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55
+								 -.17.55 -.38 0 -.19 -.01 -.82 -.01 -1.49 -2.01.37 -2.53 -.49
+								 -2.69 -.94 -.09 -.23 -.48 -.94 -.82 -1.13 -.28 -.15 -.68 -.52
+								 -.01 -.53.63 -.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07
+								 -.52.28 -.87.51 -1.07 -1.78 -.2 -3.64 -.89 -3.64 -3.95 0
+								 -.87.31 -1.59.82 -2.15 -.08 -.2 -.36 -1.02.08 -2.12 0 0 .67
+								 -.21 2.2.82.64 -.18 1.32 -.27 2 -.27.68 0 1.36.09 2 .27 1.53
+								 -1.04 2.2 -.82 2.2 -.82.44 1.1.16 1.92.08 2.12.51.56.82
+								 1.27.82 2.15 0 3.07 -1.87 3.75 -3.65 3.95.29.25.54.73.54 1.48
+								 0 1.07 -.01 1.93 -.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016
+								 8c0 -4.42 -3.58 -8 -8 -8z" />
+					</svg>
+				</span>
+				philj56
+			</a>
+		</footer>
+	</body>
+</html>
