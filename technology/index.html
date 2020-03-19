@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-GB" xml:lang="en-GB">
+	<head>
+		<title>GBCC</title>
+
+		<meta charset="UTF-8" />
+		<meta
+			name="Description"
+			content="Interesting bits I've come across while developing GBCC." />
+		<meta
+			name="viewport"
+			content="width=device-width,
+							 initial-scale=1.0,
+							 maximum-scale=5.0,
+							 minimum-scale=1.0" />
+
+		<link rel="canonical" href="https://gbcc.github.io/technology" />
+
+		<link rel="apple-touch-icon" sizes="180x180" href="icons/apple-touch-icon.png" />
+		<link rel="icon" type="image/png" sizes="16x16" href="icons/favicon-16x16.png" />
+		<link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32x32.png" />
+		<link rel="manifest" href="site.webmanifest" />
+		<link rel="mask-icon" href="icons/safari-pinned-tab.svg" color="#009688" />
+		<meta name="msapplication-TileColor" content="#009688" />
+		<meta name="theme-color" content="#009688" />
+
+		<link href="https://fonts.gstatic.com" rel="preconnect" crossorigin="anonymous" />
+		<link
+			rel="stylesheet"
+			href="https://fonts.googleapis.com/css?family=Nunito:400,700&amp;display=swap" />
+		<!-- Commented out until Firefox enables rel="preload" by default.
+		<link
+			rel="preload"
+			href="https://fonts.googleapis.com/css?family=Nunito:400,700&amp;display=swap"
+			as="style" onload="this.onload=null; this.rel='stylesheet'" />
+		<noscript>
+			<link
+				rel="stylesheet"
+				href="https://fonts.googleapis.com/css?family=Nunito:400,700&amp;display=swap" />
+		</noscript>
+		-->
+		<style>
+			body {
+				background-color: #393939;
+				color: #FFFFFFDE;
+				font-family: Nunito, sans-serif;
+				font-size: 16px;
+				line-height: 1.4;
+				margin: auto;
+				max-width: 50em;
+				padding: 1em;
+			}
+
+			header > h1 {
+				text-align: center;
+			}
+
+			h1, h2, h3 {
+				line-height: 1.2;
+			}
+
+			a {
+				color: #00CCD2;
+			}
+
+			a:visited {
+				color: #AE46DE;
+			}
+
+			a > img {
+				border: none;
+				text-align: center;
+			}
+
+			a:focus {
+				outline: #FFFFFF33 dashed medium;
+			}
+
+			li:not(:last-child) {
+				margin-bottom: 0.4em;
+			}
+
+			.centering {
+				display: table;
+				width: 100%;
+			}
+
+			.centering > a {
+				display: block;
+				margin: auto;
+				text-align: center;
+			}
+
+			.centering > a > img {
+				display: block;
+				width: 100%;
+			}
+
+			.screenshot {
+				display: block;
+				image-rendering: crisp-edges;
+				image-rendering: pixelated;
+				width: 320px;
+				height: 288px;
+			}
+
+			.sr-only {
+				clip: rect(1px, 1px, 1px, 1px);
+				clip-path: inset(50%);
+				overflow: hidden;
+				position: absolute;
+			}
+
+		</style>
+	</head>
+
+	<body>
+		<header>
+			<h1> GBCC Tech Notes </h1>
+		</header>
+
+		<main>
+			<p>
+			This is a collection of notes about interesting things I've done for
+			<a href="/">GBCC</a>, or anything else in that vein.
+			</p>
+
+			<h2 id="toc"> Table of Contents </h2>
+			<ol>
+				<li><a href="#subpixel"> Subpixel Shader </a></li>
+			</ol>
+
+
+			<h2 id="subpixel"> Subpixel Shader </h2>
+
+			<p>
+			As with any colour LCD, the Game Boy Color's pixels are made up of three
+			separate monochrome "subpixels". In the Game Boy's case, these are in the
+			most common order, RGB from left → right. On a modern LCD, these
+			subpixels are often too small to be seen with the naked eye, however on
+			the Game Boy Color they're big enough to have a noticeable effect.
+			</p>
+
+			<p>
+			Take a look at Pikachu's face in the picture below, specifically his
+			tongue and the red dots in his eyes.
+			</p>
+
+			<div class="centering">
+				<a href="pikachu_real.jpg" style="width: 320px;">
+					<img
+						src="pikachu_real_thumb.jpg"
+						alt="Photo of Pikachu's face on a real Game Boy Color" />
+				</a>
+			</div>
+
+			<p>
+			You should notice that his tongue is stripy, and the red dots in his eyes
+			are thinner than a full pixel, causing them not to touch. Now look at the
+			following screenshot, using the "Colour Correct" shader:
+			</p>
+
+			<div class="centering">
+				<a href="pikachu_colour_correct.png" style="width: 320px;">
+					<img
+						class="screenshot"
+						src="pikachu_colour_correct_thumb.png"
+						alt="Screenshot of Pikachu's face in GBCC using the Colour Correct shader" />
+				</a>
+			</div>
+
+			<p>
+			While this looks good, the tongue and cheeks are a solid red, and the red
+			dots in the eyes are touching. One way to recreate the subpixel effect is
+			to render at native resolution (160 × 144 px), however this obviously
+			produces a tiny image on a modern HD monitor. Instead, we can use the
+			much greater resolution of modern displays to render each GBC subpixel
+			with multiple pixels.
+			</p>
+			<p>
+			Simulating an LCD effect by rendering individual subpixels isn't anything
+			new in the world of emulation, but as far as I'm aware there isn't a
+			dedicated application of this to the GBC's hardware. Using a generic LCD
+			shader without colour-correcting will result in incorrect colours, as the
+			Game Boy's subpixels are not the same "pure" RGB of today's monitors. If
+			we do colour correction first, the subpixel effect is lost, as we need to
+			activate multiple simulated "subpixels" to recreate the colour. For
+			example, pure red on a GBC has an RGB value of something like
+			<span style="color: #FF7145;">#FF7145</span> — there is a significant
+			amount of green and blue present.
+			</p>
+
+			<p>
+			The solution then is to simulate an LCD with subpixels the same colour as
+			the Game Boy's, and this is what GBCC does. This also simplifies the
+			colour correction, as we only need three values - the modern LCD RGB
+			values of each of the GBC's subpixels. GBCC uses the following values:
+			</p>
+
+			<ul>
+				<li style="color: #FF7145;">
+					<span class="sr-only"> Red: </span> #FF7145
+				</li>
+				<li style="color: #C1D650;">
+					<span class="sr-only"> Green: </span> #C1D650
+				</li>
+				<li style="color: #3BCEFF;">
+					<span class="sr-only"> Blue: </span> #3BCEFF
+				</li>
+			</ul>
+
+			<p>
+			The next question is: what shape do we give to the intensity profile of
+			each subpixel? I'm not sure of the best answer to this one - at the time
+			of writing, GBCC uses a hemispherical profile of radius 2/7 of a pixel,
+			with each subpixel spaced 2/7 of a pixel apart, leaving a small dark line
+			on the right of each pixel. A hemisphere is used as it's both easy to
+			calculate and looks good at high resolution :). The reason the fractions
+			are in terms of 7ths is mostly due to this mapping on to whole pixels
+			when displayed at 1080p (1080 / 144 = 7.5, so we can only scale the GBC
+			screen up by an integer factor of 7 on a landscape 1080p display).
+			</p>
+
+			<div class="centering">
+				<a href="subpixels.svg" style="max-width:44em;">
+					<img
+						src="subpixels.svg"
+						alt="Plot of subpixel intensity profiles used in GBCC" />
+				</a>
+				<p style="text-align: left; width: 80%; margin-left: auto; margin-right: auto;">
+				Curves showing the intensity of each subpixel across 1 screen pixel
+				displaying pure white. The shaded region underneath shows the colour
+				reproduced by GBCC, by adding each subpixel's colour weighted by the
+				intensity profile. Ideally, there shouldn't be discontinuities, but
+				this looks good at high resolutions so ¯\_(ツ)_/¯. Also note that the
+				red quarter-circle on the right takes its colour value from that of the
+				next pixel over.
+				</p>
+				<div style="text-align: center">
+					<a href="subpixels.py">Code to produce this plot</a>
+				</div>
+			</div>
+
+			<p>
+			The image below shows the same screenshot again, with the "Subpixel"
+			shader applied at 1080p (click the image to open it full size).
+			</p>
+
+			<div class="centering">
+				<a href="pikachu_subpixel.png" style="width: 320px;">
+					<img
+						class="screenshot"
+						src="pikachu_subpixel.png"
+						alt="Screenshot of Pikachu's face in GBCC using the Subpixel shader" />
+				</a>
+			</div>
+
+			<p>
+			Hopefully, by flicking between this screenshot and the photo from the
+			beginning, you can agree that this is a pretty good likeness to a real
+			GBC. The main caveat is that the colours look different for different
+			scaling factors; this is mostly fine, but below 4× scaling things start
+			to look noticeably wrong. At 1080p and above though, I'm fairly sure this
+			is as close to a real GBC screen you can get with any current emulator.
+			</p>
+
+			<a href="#toc">Back to Table of Contents</a>
+		</main>
+
+
+		<hr style="border: 1px solid #FFFFFF33" />
+		<footer style="color: #FFFFFF90; display: flex; justify-content: space-between;">
+			<span>© 2017-2020 Phil Jones</span>
+			<a href="https://github.com/philj56/" style="display: inline-flex; align-items: center;">
+				<span style="padding-right: 5px; height: 20px;">
+					<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 16 16" version="1.1">
+						<path
+							fill="#FFFFFF90"
+							fill-rule="evenodd"
+							d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55
+								 -.17.55 -.38 0 -.19 -.01 -.82 -.01 -1.49 -2.01.37 -2.53 -.49
+								 -2.69 -.94 -.09 -.23 -.48 -.94 -.82 -1.13 -.28 -.15 -.68 -.52
+								 -.01 -.53.63 -.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07
+								 -.52.28 -.87.51 -1.07 -1.78 -.2 -3.64 -.89 -3.64 -3.95 0
+								 -.87.31 -1.59.82 -2.15 -.08 -.2 -.36 -1.02.08 -2.12 0 0 .67
+								 -.21 2.2.82.64 -.18 1.32 -.27 2 -.27.68 0 1.36.09 2 .27 1.53
+								 -1.04 2.2 -.82 2.2 -.82.44 1.1.16 1.92.08 2.12.51.56.82
+								 1.27.82 2.15 0 3.07 -1.87 3.75 -3.65 3.95.29.25.54.73.54 1.48
+								 0 1.07 -.01 1.93 -.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016
+								 8c0 -4.42 -3.58 -8 -8 -8z" />
+					</svg>
+				</span>
+				philj56
+			</a>
+		</footer>
+	</body>
+</html>
