@@ -127,16 +127,122 @@
 
 			<h2 id="toc"> Table of Contents </h2>
 			<ol>
-				<li><a href="#subpixel"> Subpixel Shader </a></li>
+				<li><a href="#colour_correction"> Colour Correction </a></li>
+				<li><a href="#subpixel"> Subpixel Rendering </a></li>
 			</ol>
 
-
-			<h2 id="subpixel"> Subpixel Shader </h2>
+			<h2 id="colour_correction"> Colour Correction </h2>
 
 			<p>
-			As with any colour LCD, the Game Boy Color's pixels are made up of three
-			separate monochrome "subpixels". In the Game Boy's case, these are in the
-			most common order, RGB from left → right. On a modern LCD, these
+			The RGB subpixels on the Game Boy Color's display are not the same colour
+			as those in a modern monitor. This leads to incorrect colours if we
+			directly use the RGB values set by the GBC. This can be seen in the
+			screenshot below.
+			</p>
+
+			<div class="centering">
+				<a href="shantae_raw.png" style="width: 320px;">
+					<img
+						src="shantae_raw.png"
+						alt="Screenshot of Shantae in GBCC without colour correction." />
+				</a>
+			</div>
+
+			<p>
+			Everything is way oversaturated , especially purples; look at the rocks
+			at the bottom, or the shadow underneath the roof. Most emulators try to
+			correct for this in some way, but it's especially difficult for the Game
+			Boy Color, as the lack of a backlight means that the colours are
+			dependent on ambient lighting.
+			</p>
+
+			<p>
+			For GBCC, I decided to use a lookup table, rather than try to figure out
+			an equation for each RGB channel. To do this, however, I needed some way
+			to recreate different colours on a real GBC, and know the values being
+			used. The easiest way would be to write a test ROM, but custom flashcarts
+			are expensive, so instead I bought a copy of Harvest Moon 3. This gives
+			you the option to change the RGB value of your character's clothes.
+			</p>
+
+			<div class="centering">
+				<a href="harvest_moon.png" style="width: 320px;">
+					<img
+						src="harvest_moon.png"
+						alt="Screenshot of the character customisation screen in Harvest Moon 3." />
+				</a>
+			</div>
+
+			<p>
+			I sampled an 8×8×8 grid of colours (so 512 colours overall), and tried to
+			best match each colour on a PC. Originally, I then used this to generate
+			a 32×32×32 lookup table by trilinearly interpolating between neighbouring
+			points, and then passing this as a Texture Buffer Object (TBO) to a
+			shader. The shader would then convert input RGB values to an index into
+			this buffer. This approach worked fine, and the results are shown below.
+			</p>
+
+			<div class="centering">
+				<a href="shantae_colour_correct.png" style="width: 320px;">
+					<img
+						src="shantae_colour_correct.png"
+						alt="Screenshot of Shantae in GBCC with colour correction." />
+				</a>
+			</div>
+
+			<p>
+			This is much nicer - the rocks are now rock-coloured, and the red and
+			gold of the UI is no longer eye-bleeding.
+			</p>
+
+			<p>
+			An issue arose though, when I came to porting GBCC to Android. I had
+			decided on a minimum requirement of OpenGL ES 3.0, as this allowed me to
+			change as little as possible from the existing OpenGL 3.2 desktop code
+			while still being compatible with the majority of devices. This came with
+			one big drawback; OpenGL ES 3.0 doesn't support TBOs. I scoured the
+			documentation for a data structure that could hold the lookup table, but
+			nothing seemed suitable. The main problem was size; the only (or so I
+			thought) suitable buffer object in ES 3.0 is a Uniform Buffer Object
+			(UBO), and the spec only guarantees that the maximum UBO size must be at
+			least
+			<a href="https://www.khronos.org/registry/OpenGL/specs/es/3.0/es_spec_3.0.pdf">16 KiB</a>
+			(Table 6.33, Page 278). For a 32×32×32 lookup table with 4 bytes per
+			colour, we have 128 KiB of data, making UBOs infeasible. There are other,
+			larger buffer objects present in modern GL, such as SSBOs which have a
+			"minimum maximum" size of
+			<a href="https://www.khronos.org/registry/OpenGL/specs/es/3.1/es_spec_3.1.pdf">128 MiB</a>
+			(Table 20.47, Page 406) , but these are only present in ES 3.1 and later.
+			Moving to ES 3.1 would mean sacrificing compatibility with
+			<a href="https://developer.android.com/about/dashboards#OpenGL">~29%</a>
+			of Android devices, which definitely didn't seem worth it.
+			</p>
+
+			<p>
+			After an ashamedly long time, and some thinking that this was impossible,
+			I realised that I was making the issue much more complicated than it
+			needed to be. I was looking at the lookup table as if it was a chunk of
+			arbitrary data, when really what I had was a <em>texture</em>. OpenGL ES
+			3.0 supports 3D textures of at least 256 texels in each dimension, so
+			GBCC's 32×32×32 lookup table would easily fit. I then also realised that
+			I didn't even need a table that large; GPUs perform linear interpolation
+			all of the time. Instead of manually interpolating my 8×8×8 table, I
+			could just use that directly as a 3D texture to do the lookup, and let
+			the graphics card handle the interpolation. In my
+			<a href="https://github.com/philj56/gbcc/commit/4ce246ac2a168d6973532df73bbe7f189c62f127">favourite commit</a>
+			to GBCC so far, this both simplified the shader code, allowed me to
+			delete all of the manual interpolation code, and fixed the Colour Correct
+			shader on Android. Adding features by removing code feels good :)
+			</p>
+
+			<a href="#toc">Back to Table of Contents</a>
+
+			<h2 id="subpixel"> Subpixel Rendering </h2>
+
+			<p>
+			As with most colour LCDs, the Game Boy Color's pixels are made up of
+			three separate monochrome "subpixels". In the Game Boy's case, these are
+			in the most common order, RGB from left → right. On a modern LCD, these
 			subpixels are often too small to be seen with the naked eye, however on
 			the Game Boy Color they're big enough to have a noticeable effect.
 			</p>
@@ -150,7 +256,7 @@
 				<a href="pikachu_real.jpg" style="width: 320px;">
 					<img
 						src="pikachu_real_thumb.jpg"
-						alt="Photo of Pikachu's face on a real Game Boy Color" />
+						alt="Photo of Pikachu's face on a real Game Boy Color." />
 				</a>
 			</div>
 
@@ -165,7 +271,7 @@
 					<img
 						class="screenshot"
 						src="pikachu_colour_correct_thumb.png"
-						alt="Screenshot of Pikachu's face in GBCC using the Colour Correct shader" />
+						alt="Screenshot of Pikachu's face in GBCC using the Colour Correct shader." />
 				</a>
 			</div>
 
@@ -211,7 +317,7 @@
 
 			<p>
 			The next question is: what shape do we give to the intensity profile of
-			each subpixel? I'm not sure of the best answer to this one - at the time
+			each subpixel? I'm not sure of the best answer to this one — at the time
 			of writing, GBCC uses a hemispherical profile of radius 2/7 of a pixel,
 			with each subpixel spaced 2/7 of a pixel apart, leaving a small dark line
 			on the right of each pixel. A hemisphere is used as it's both easy to
@@ -225,7 +331,7 @@
 				<a href="subpixels.svg" style="max-width:44em;">
 					<img
 						src="subpixels.svg"
-						alt="Plot of subpixel intensity profiles used in GBCC" />
+						alt="Plot of subpixel intensity profiles used in GBCC." />
 				</a>
 				<p style="text-align: left; width: 80%; margin-left: auto; margin-right: auto;">
 				Curves showing the intensity of each subpixel across 1 screen pixel
@@ -251,7 +357,7 @@
 					<img
 						class="screenshot"
 						src="pikachu_subpixel.png"
-						alt="Screenshot of Pikachu's face in GBCC using the Subpixel shader" />
+						alt="Screenshot of Pikachu's face in GBCC using the Subpixel shader." />
 				</a>
 			</div>
 
