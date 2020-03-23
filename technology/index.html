@@ -112,20 +112,18 @@
 				position: absolute;
 			}
 
-			.show_on_hover:hover img {
-							visibility: visible;
-			}
-
 			#interlace {
-							width: 658px;
-							height: 280px;
+							max-width: 658px;
+							max-height: 288px;
 							background-image: url("interlace_still.png");
-							background-size: 658px 280px;
+							background-repeat: no-repeat;
+							background-size: 658px 288px;
 			}
 
 			#interlace:hover {
 							background-image: url("interlace_slow.png");
-							background-size: 658px 280px;
+							background-repeat: no-repeat;
+							background-size: 658px 288px;
 			}
 
 		</style>
@@ -408,9 +406,13 @@
 			</p>
 
 			<div class="centering" style="position: relative; top: 0; left: 0;">
-							<a class="show_on_hover" href="interlace.png" style="width: 658px;">
-											<img class="screenshot" id="interlace" src="transparent.png" alt="Animation of interlacing effect in GBCC." />
-							</a>
+				<a href="interlace.png" style="max-width: 658px;">
+					<img
+						class="screenshot"
+						id="interlace"
+						src="transparent.png"
+						alt="Animation of interlacing effect in GBCC." />
+				</a>
 			</div>
 
 			<p>
