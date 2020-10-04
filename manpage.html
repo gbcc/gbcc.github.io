@@ -53,6 +53,7 @@
 
 			h1, h2, h3 {
 				line-height: 1.2;
+				text-decoration: underline;
 			}
 
 			a {
@@ -74,196 +75,361 @@
 	<body>
 		<main>
 			<h1>NAME</h1>
-<p>gbcc - Game Boy Color emulator written in C</p>
-<h1>SYNOPSIS</h1>
-<p><strong>gbcc</strong> [-aAbfFhivV] [-c <em>config_file</em>] [-p <em>palette</em>] [-s <em>shader</em>] [-t <em>speed</em>] rom</p>
-<h1>DESCRIPTION</h1>
-<p>gbcc is a Game Boy Color emulator, created mostly as an exercise in emulator development and writing a large project in C. Development is ongoing (though slow).</p>
-<h1>OPTIONS</h1>
-<p><strong>-a, --autoresume</strong></p>
-<blockquote>
-<p>Automatically resume from when gbcc was last closed for this game.</p>
-</blockquote>
-<p><strong>-A, --autosave</strong></p>
-<blockquote>
-<p>Automatically save SRAM after the last write was detected. Default is to save on normal program exit.</p>
-</blockquote>
-<p><strong>-b, --background</strong></p>
-<blockquote>
-<p>Enable playback while unfocused.</p>
-</blockquote>
-<p><strong>-c, --config</strong></p>
-<blockquote>
-<p>Specify path to custom config file.</p>
-</blockquote>
-<p><strong>-f, --fractional</strong></p>
-<blockquote>
-<p>Enable fractional scaling (default is integer).</p>
-</blockquote>
-<p><strong>-F, --frame-blending</strong></p>
-<blockquote>
-<p>Enable frame blending.</p>
-</blockquote>
-<p><strong>-h, --help</strong></p>
-<blockquote>
-<p>Show help message and exit.</p>
-</blockquote>
-<p><strong>-i, --interlace</strong></p>
-<blockquote>
-<p>Enable interlaced mode (experimental).</p>
-</blockquote>
-<p><strong>-p, --palette</strong>=<em>palette</em></p>
-<blockquote>
-<p>Select the color palette for use in DMG mode.</p>
-</blockquote>
-<p><strong>-s, --shader</strong></p>
-<blockquote>
-<p>Select the shader to use on startup.</p>
-</blockquote>
-<p><strong>-t, --turbo</strong>=<em>speed</em></p>
-<blockquote>
-<p>Set a fractional speed limit for turbo mode. Defaults to 0 (unlimited).</p>
-</blockquote>
-<p><strong>-v, --vsync</strong></p>
-<blockquote>
-<p>Enable VSync.</p>
-</blockquote>
-<p><strong>-V, --vram-window</strong></p>
-<blockquote>
-<p>Display a window containing VRAM tile data.</p>
-</blockquote>
-<h1>KEYS</h1>
-<p>The following are the keybindings as for a standard QWERTY keyboard, and will vary for others.</p>
-<p>z</p>
-<blockquote>
-<p>A button</p>
-</blockquote>
-<p>x</p>
-<blockquote>
-<p>B button</p>
-</blockquote>
-<p>&lt;Return&gt;</p>
-<blockquote>
-<p>Start</p>
-</blockquote>
-<p>&lt;Space&gt;</p>
-<blockquote>
-<p>Select</p>
-</blockquote>
-<p>&lt;Arrow keys&gt;</p>
-<blockquote>
-<p>D-Pad</p>
-</blockquote>
-<p>&lt;Right Shift&gt;</p>
-<blockquote>
-<p>Turbo mode (toggle)</p>
-</blockquote>
-<p>&lt;Escape&gt;</p>
-<blockquote>
-<p>Toggle settings menu</p>
-</blockquote>
-<p>s</p>
-<blockquote>
-<p>Filtered &amp; scaled screenshot</p>
-</blockquote>
-<p>S</p>
-<blockquote>
-<p>Raw screenshot</p>
-</blockquote>
-<p>p</p>
-<blockquote>
-<p>Pause emulation</p>
-</blockquote>
-<p>P</p>
-<blockquote>
-<p>Connect the Gameboy Printer, printing to stdout.</p>
-</blockquote>
-<p>f</p>
-<blockquote>
-<p>Toggle FPS counter</p>
-</blockquote>
-<p>l</p>
-<blockquote>
-<p>Connect the link cable port to itself. This makes the GameBoy act as if it is talking to an exact copy of itself, and enables e.g. trading (and battling!) with oneself in Pokémon.</p>
-</blockquote>
-<p>A</p>
-<blockquote>
-<p>Toggle autosave</p>
-</blockquote>
-<p>b</p>
-<blockquote>
-<p>Toggle background playback</p>
-</blockquote>
-<p>v</p>
-<blockquote>
-<p>Cycle through available shaders</p>
-</blockquote>
-<p>V</p>
-<blockquote>
-<p>Toggle VRAM window display</p>
-</blockquote>
-<p>1</p>
-<blockquote>
-<p>Toggle background display</p>
-</blockquote>
-<p>2</p>
-<blockquote>
-<p>Toggle window display</p>
-</blockquote>
-<p>3</p>
-<blockquote>
-<p>Toggle sprites display</p>
-</blockquote>
-<p>&lt;F1-9&gt;</p>
-<blockquote>
-<p>Load savestate 1-9</p>
-</blockquote>
-<p>&lt;Left Shift + F1-9&gt;</p>
-<blockquote>
-<p>Save savestate 1-9</p>
-</blockquote>
-<p>&lt;Numpad 2,4,6,8&gt;</p>
-<blockquote>
-<p>Accelerometer control (MBC7 games only)</p>
-</blockquote>
-<p>&lt;Left Shift + Numpad 2,4,6,8&gt;</p>
-<blockquote>
-<p>Strong accelerometer control (MBC7 games only)</p>
-</blockquote>
-<h1>FILES</h1>
-<p>Note: these are the defaults as defined at compile time.</p>
-<p><em>/usr/share/gbcc/tileset.png</em></p>
-<blockquote>
-<p>Tileset used for the on-screen display.</p>
-</blockquote>
-<p><em>/usr/share/gbcc/print.wav</em></p>
-<blockquote>
-<p>Sound played while printing.</p>
-</blockquote>
-<p><em>/usr/share/gbcc/shaders/</em></p>
-<blockquote>
-<p>Folder containing all GLSL shaders used for rendering.</p>
-</blockquote>
-<p><em>$XDG_CONFIG_HOME/gbcc/config</em></p>
-<blockquote>
-<p>Config file. Available options are the same as command line options (where possible), defined with syntax:</p>
-<blockquote>
-<p>option = value</p>
-</blockquote>
-<p>For command line equivalents which take no arguments, value is taken to be a boolean (i.e. value = 0 disables the option, any other number enables it).</p>
-</blockquote>
-<blockquote>
-<p>Lines starting with '#' are ignored.</p>
-<p>Command line options override config file options.</p>
-</blockquote>
-<h1>SAVE FILES</h1>
-<p>Saves are created with the same name as the rom, ending in .sav. The save file format is a plain dump of SRAM. For MBC3 cartridges, RTC data is appended to this ram dump in plain text.</p>
-<h1>SAVE STATES</h1>
-<p>Save states are created with the same name as the rom, ending in .s[0-9]. Extensions s1-s9 are the save states associated with the corresponding function keys, while s0 is a backup created every time gbcc is closed. The save state format is a pure binary dump of the main gbcc struct, so will almost certainly not work if moved between different architectures / compilers etc.</p>
-<h1>BUGS</h1>
-<p>Surprisingly few.</p>
-<h1>AUTHORS</h1>
-<p>Philip Jones &lt;philj56@gmail.com&gt;</p>
+			<p>gbcc - Game Boy Color emulator written in C</p>
+
+			<h1>SYNOPSIS</h1>
+			<p>
+			<strong>gbcc</strong> [-aAbfFhivV] [-c <em>config_file</em>]
+			[-C <em>cheat</em>] [-p <em>palette</em>] [-s <em>shader</em>]
+			[-t <em>speed</em>] rom
+			</p>
+
+			<h1>DESCRIPTION</h1>
+			<p>
+			gbcc is a Game Boy &amp; Game Boy Color emulator, created mostly as an
+			exercise in emulator development and writing a large project in C.
+			Development is ongoing (though slow).
+			</p>
+
+			<h1>OPTIONS</h1>
+			<p><strong>-a, --autoresume</strong></p>
+			<blockquote>
+				<p>
+				Automatically resume from when gbcc was last closed for this game.
+				</p>
+			</blockquote>
+
+			<p><strong>-A, --autosave</strong></p>
+			<blockquote>
+				<p>
+				Automatically save SRAM after the last write was detected. Default is
+				to save on normal program exit.
+				</p>
+			</blockquote>
+
+			<p><strong>-b, --background</strong></p>
+			<blockquote>
+				<p>Enable playback while unfocused.</p>
+			</blockquote>
+
+			<p><strong>-c, --config</strong>=<em>path</em></p>
+			<blockquote>
+				<p>Specify path to custom config file.</p>
+			</blockquote>
+
+			<p><strong>-C, --cheat</strong>=<em>code</em></p>
+			<blockquote>
+				<p>
+				Add a 9-digit GameGenie or 8-digit GameShark cheat code. Dashes are
+				ignored. Can be specified multiple times for multiple cheats.
+				</p>
+			</blockquote>
+
+			<p><strong>-f, --fractional</strong></p>
+			<blockquote>
+				<p>Enable fractional scaling (default is integer).</p>
+			</blockquote>
+
+			<p><strong>-F, --frame-blending</strong></p>
+			<blockquote>
+				<p>Enable frame blending.</p>
+			</blockquote>
+
+			<p><strong>-h, --help</strong></p>
+			<blockquote>
+				<p>Show help message and exit.</p>
+			</blockquote>
+
+			<p><strong>-i, --interlacing</strong></p>
+			<blockquote>
+				<p>
+				Enable interlacing mode. The Game Boy draws every other line darker,
+				leading to interesting visual effects in some games. Using this without
+				frame-blending <strong>will</strong> look terrible.
+				</p>
+			</blockquote>
+
+			<p><strong>-p, --palette</strong>=<em>palette</em></p>
+			<blockquote>
+				<p>Select the color palette for use in DMG mode.</p>
+			</blockquote>
+
+			<p><strong>-s, --shader</strong>=<em>shader</em></p>
+			<blockquote>
+				<p>Select the shader to use on startup.</p>
+			</blockquote>
+
+			<p><strong>-S, --save-dir</strong>=<em>path</em></p>
+			<blockquote>
+				<p>
+				Specify a directory to use for saves and savestates. By default, the
+				same folder as the rom file will be used.
+				</p>
+			</blockquote>
+
+			<p><strong>-t, --turbo</strong>=<em>speed</em></p>
+			<blockquote>
+				<p>
+				Set a fractional speed limit for turbo mode. Defaults to 0 (unlimited).
+				Audio will be disabled while turboing, unless a speed limit is set.
+				</p>
+			</blockquote>
+
+			<p><strong>-v, --vsync</strong></p>
+			<blockquote>
+				<p>
+				Enable Vsync, experimental. By default, gbcc will sync to audio,
+				playing back at real Game Boy speed. This leads to slight visual
+				flickering, which is only noticeable if playing a game that makes use
+				of transparency. Enabling Vsync will cause gbcc to sync to video
+				instead, playing back slightly faster than a real Game Boy (by about
+				0.5%) and eliminating visual flickering.
+				</p>
+			</blockquote>
+
+			<p><strong>-V, --vram-window</strong></p>
+			<blockquote>
+				<p>Display a window containing VRAM tile data.</p>
+			</blockquote>
+
+			<h1>KEYS</h1>
+			<p>
+			The following are the keybindings as for a standard QWERTY keyboard, and
+			will vary for others.
+			</p>
+
+			<p>z</p>
+			<blockquote>
+				<p>A button</p>
+			</blockquote>
+
+			<p>x</p>
+			<blockquote>
+				<p>B button</p>
+			</blockquote>
+
+			<p>&lt;Return&gt;</p>
+			<blockquote>
+				<p>Start</p>
+			</blockquote>
+
+			<p>&lt;Space&gt;</p>
+			<blockquote>
+				<p>Select</p>
+			</blockquote>
+
+			<p>&lt;Arrow keys&gt;</p>
+			<blockquote>
+				<p>D-Pad</p>
+			</blockquote>
+
+			<p>&lt;Right Shift&gt;</p>
+			<blockquote>
+				<p>Turbo mode (toggle)</p>
+			</blockquote>
+
+			<p>&lt;Escape&gt;</p>
+			<blockquote>
+				<p>Toggle settings menu</p>
+			</blockquote>
+
+			<p>s</p>
+			<blockquote>
+				<p>Filtered &amp; scaled screenshot</p>
+			</blockquote>
+
+			<p>&lt;Left Shift&gt; + S</p>
+			<blockquote>
+				<p>Raw screenshot</p>
+			</blockquote>
+
+			<p>p</p>
+			<blockquote>
+				<p>Pause emulation</p>
+			</blockquote>
+
+			<p>&lt;Left Shift&gt; + P</p>
+			<blockquote>
+				<p>Connect the Gameboy Printer, printing to stdout</p>
+			</blockquote>
+
+			<p>f</p>
+			<blockquote>
+				<p>Toggle FPS counter</p>
+			</blockquote>
+
+			<p>&lt;Left Shift&gt; + F</p>
+			<blockquote>
+				<p>Toggle frame blending</p>
+			</blockquote>
+
+			<p>l</p>
+			<blockquote>
+				<p>
+				Connect the link cable port to itself. This makes the GameBoy act as if
+				it is talking to an exact copy of itself, and enables e.g. trading (and
+				battling!) with oneself in Pokémon.
+				</p>
+			</blockquote>
+
+			<p>&lt;Left Shift&gt; + A</p>
+			<blockquote>
+				<p>Toggle autosave</p>
+			</blockquote>
+
+			<p>b</p>
+			<blockquote>
+				<p>Toggle background playback</p>
+			</blockquote>
+
+			<p>c</p>
+			<blockquote>
+				<p>Toggle cheats</p>
+			</blockquote>
+
+			<p>v</p>
+			<blockquote>
+				<p>Toggle Vsync</p>
+			</blockquote>
+
+			<p>&lt;Left Shift&gt; + V</p>
+			<blockquote>
+				<p>Toggle VRAM window display</p>
+			</blockquote>
+
+			<p>o</p>
+			<blockquote>
+				<p>Cycle through available shaders</p>
+			</blockquote>
+
+			<p>1</p>
+			<blockquote>
+				<p>Toggle background display</p>
+			</blockquote>
+
+			<p>2</p>
+			<blockquote>
+				<p>Toggle window display</p>
+			</blockquote>
+
+			<p>3</p>
+			<blockquote>
+				<p>Toggle sprites display</p>
+			</blockquote>
+
+			<p>&lt;F1-9&gt;</p>
+			<blockquote>
+				<p>Load savestate 1-9</p>
+			</blockquote>
+
+			<p>&lt;Left Shift&gt; + &lt;F1-9&gt;</p>
+			<blockquote>
+				<p>Save savestate 1-9</p>
+			</blockquote>
+
+			<p>&lt;Numpad 2,4,6,8&gt;</p>
+			<blockquote>
+				<p>Accelerometer control (MBC7 games only)</p>
+			</blockquote>
+
+			<p>&lt;Left Shift&gt; + &lt;Numpad 2,4,6,8&gt;</p>
+			<blockquote>
+				<p>Strong accelerometer control (MBC7 games only)</p>
+			</blockquote>
+
+			<h1>FILES</h1>
+			<p>Note: these are the defaults as defined at compile time.</p>
+
+			<p><em>/usr/share/gbcc/tileset.png</em></p>
+			<blockquote>
+				<p>Tileset used for the on-screen display.</p>
+			</blockquote>
+
+			<p><em>/usr/share/gbcc/print.wav</em></p>
+			<blockquote>
+				<p>Sound played while printing.</p>
+			</blockquote>
+
+			<p><em>/usr/share/gbcc/shaders/</em></p>
+			<blockquote>
+				<p>Folder containing all GLSL shaders used for rendering.</p>
+			</blockquote>
+
+			<p><em>/usr/share/gbcc/icons/</em></p>
+			<blockquote>
+				<p>Folder containing application icons.</p>
+			</blockquote>
+
+			<p><em>$XDG_CONFIG_HOME/gbcc/config</em></p>
+			<blockquote>
+				<p>Default config file. See below for the format specification.</p>
+			</blockquote>
+
+			<h1>CONFIG FILE</h1>
+			<p>
+			The config file format is basic .ini/.cfg style. Options are set one per
+			line, with the syntax:
+			</p>
+			<blockquote>
+				<p>option = value</p>
+			</blockquote>
+			<p>
+			Whitespace is ignored. Lines beginning with # or ; are treated as
+			comments. Section headers of the form [header] are currently ignored. All
+			options and values are case-insensitive, except where case is important
+			e.g. paths.
+			</p>
+			<p>
+			Available options are the same as command line options where applicable.
+			For command line equivalents which take no arguments, value is taken to
+			be a boolean, either 'true' or 'false'. All other options follow the same
+			pattern as their equivalent command line option.
+			</p>
+			<p>
+			Later options override earlier options, and command line options override
+			config file options. The exception is the 'cheat' option, which can be
+			specified multiple times in either the config file or command line.
+			</p>
+
+			<h2>EXAMPLE CONFIG</h2>
+			<pre><code>[Sensible Defaults]
+; Behaviour
+autoresume = true
+autosave = false
+background = false
+turbo = 0
+vram-window = false
+
+; Graphics
+fractional = false
+frame-blending = true
+interlacing = true
+palette = default
+shader = Subpixel
+vsync = true</code></pre>
+
+			<h1>SAVE FILES</h1>
+			<p>
+			Saves are created with the same name as the rom, ending in .sav. The save
+			file format is a plain dump of SRAM. For MBC3 cartridges, RTC data is
+			appended to this ram dump in plain text.
+			</p>
+
+			<h1>SAVE STATES</h1>
+			<p>
+			Save states are created with the same name as the rom, ending in .s[0-9].
+			Extensions s1-s9 are the save states associated with the corresponding
+			function keys, while s0 is a backup created every time gbcc is closed.
+			The save state format is a pure binary dump of the main gbcc struct, so
+			will almost certainly not work if moved between different architectures /
+			compilers etc.
+			</p>
+
+			<h1>BUGS</h1>
+			<p>Surprisingly few.</p>
+
+			<h1>AUTHORS</h1>
+			<p>Philip Jones &lt;philj56@gmail.com&gt;</p>
 		</main>
 
 
