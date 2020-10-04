@@ -167,8 +167,8 @@
 			</div>
 
 			<p>
-			Everything is way oversaturated , especially purples; look at the rocks
-			at the bottom, or the shadow underneath the roof. Most emulators try to
+			Everything is way oversaturated, especially purples; look at the rocks at
+			the bottom, or the shadow underneath the roof. Most emulators try to
 			correct for this in some way, but it's especially difficult for the Game
 			Boy Color, as the lack of a backlight means that the colours are
 			dependent on ambient lighting.
@@ -210,7 +210,9 @@
 
 			<p>
 			This is much nicer - the rocks are now rock-coloured, and the red and
-			gold of the UI is no longer eye-bleeding.
+			gold of the UI is no longer eye-bleeding. Some of the purples are
+			slightly too grey compared to a real system, and Shantae's skin is a bit
+			too dark, but the overall effect is pretty good.
 			</p>
 
 			<p>
@@ -301,6 +303,7 @@
 			much greater resolution of modern displays to render each GBC subpixel
 			with multiple pixels.
 			</p>
+
 			<p>
 			Simulating an LCD effect by rendering individual subpixels isn't anything
 			new in the world of emulation, but as far as I'm aware there isn't a
@@ -335,14 +338,32 @@
 
 			<p>
 			The next question is: what shape do we give to the intensity profile of
-			each subpixel? I'm not sure of the best answer to this one — at the time
-			of writing, GBCC uses a hemispherical profile of radius 2/7 of a pixel,
-			with each subpixel spaced 2/7 of a pixel apart, leaving a small dark line
-			on the right of each pixel. A hemisphere is used as it's both easy to
-			calculate and looks good at high resolution :). The reason the fractions
-			are in terms of 7ths is mostly due to this mapping on to whole pixels
-			when displayed at 1080p (1080 / 144 = 7.5, so we can only scale the GBC
-			screen up by an integer factor of 7 on a landscape 1080p display).
+			each subpixel? I'm not sure of the best answer to this one. Looking at
+			the screen through a microscope, we can see that the subpixels are
+			roughly rectangular:
+			</p>
+
+			<div class="centering">
+				<a href="subpixels.jpg" style="width: 320px;">
+					<img
+						src="subpixels.jpg"
+						alt="Game Boy Color subpixels as seen through a microscope." />
+				</a>
+			</div>
+
+			<p>
+			Our eyes can't really resolve the subpixels individually at normal
+			viewing distances, so we see a blurred version of the above as "white".
+			The correct profile then is probably a Gaussian-blurred rectangle, but
+			this is a relatively complicated shape to calculate. At the time of
+			writing, GBCC uses a semicircular profile of radius 2/7 of a pixel, with
+			each subpixel spaced 2/7 of a pixel apart, leaving a small dark line on
+			the right of each pixel. A semicircle is easy to calculate and isn't a
+			bad fit for a blurred rectangle (plus it looks good at high resolution
+			🙂). The reason the fractions are in terms of 7ths is mostly due to this
+			mapping on to whole pixels when displayed at 1080p (1080 / 144 = 7.5, so
+			we can only scale the GBC screen up by an integer factor of 7 on a
+			landscape 1080p display).
 			</p>
 
 			<div class="centering">

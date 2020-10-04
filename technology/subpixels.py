@@ -12,7 +12,7 @@ def circ(x, r):
 n = 10001
 x = np.linspace(0, 1/160, n)
 
-# Offset hemispheres, as used in GBCC
+# Offset semicircles, as used in GBCC
 yr = np.mod(x * 160 * 7 + 3, 7) - 3
 zr = circ(yr, 2)
 
