@@ -25,22 +25,37 @@
 		<meta name="msapplication-TileColor" content="#009688" />
 		<meta name="theme-color" content="#009688" />
 
-		<link href="https://fonts.gstatic.com" rel="preconnect" crossorigin="anonymous" />
-		<link
-			rel="stylesheet"
-			href="https://fonts.googleapis.com/css?family=Nunito:400,700&amp;display=swap" />
-		<!-- Commented out until Firefox enables rel="preload" by default.
-		<link
-			rel="preload"
-			href="https://fonts.googleapis.com/css?family=Nunito:400,700&amp;display=swap"
-			as="style" onload="this.onload=null; this.rel='stylesheet'" />
-		<noscript>
-			<link
-				rel="stylesheet"
-				href="https://fonts.googleapis.com/css?family=Nunito:400,700&amp;display=swap" />
-		</noscript>
-		-->
+
+
 		<style>
+			/* nunito-regular - latin-ext_latin */
+			@font-face {
+				font-family: 'Nunito';
+				font-style: normal;
+				font-weight: 400;
+				src: url('/fonts/nunito-v16-latin-ext_latin-regular.eot'); /* IE9 Compat Modes */
+				src: local(''),
+					url('/fonts/nunito-v16-latin-ext_latin-regular.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+					url('/fonts/nunito-v16-latin-ext_latin-regular.woff2') format('woff2'), /* Super Modern Browsers */
+					url('/fonts/nunito-v16-latin-ext_latin-regular.woff') format('woff'), /* Modern Browsers */
+					url('/fonts/nunito-v16-latin-ext_latin-regular.ttf') format('truetype'), /* Safari, Android, iOS */
+					url('/fonts/nunito-v16-latin-ext_latin-regular.svg#Nunito') format('svg'); /* Legacy iOS */
+			}
+
+			/* nunito-700 - latin-ext_latin */
+			@font-face {
+				font-family: 'Nunito';
+				font-style: normal;
+				font-weight: 700;
+				src: url('/fonts/nunito-v16-latin-ext_latin-700.eot'); /* IE9 Compat Modes */
+				src: local(''),
+					url('/fonts/nunito-v16-latin-ext_latin-700.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+					url('/fonts/nunito-v16-latin-ext_latin-700.woff2') format('woff2'), /* Super Modern Browsers */
+					url('/fonts/nunito-v16-latin-ext_latin-700.woff') format('woff'), /* Modern Browsers */
+					url('/fonts/nunito-v16-latin-ext_latin-700.ttf') format('truetype'), /* Safari, Android, iOS */
+					url('/fonts/nunito-v16-latin-ext_latin-700.svg#Nunito') format('svg'); /* Legacy iOS */
+			}
+
 			body {
 				background-color: #393939;
 				color: #FFFFFF; /* Workaround for browsers that don't support alpha */
